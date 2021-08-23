@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src="./lib/Promise_ES5.js"></script> -->
+  <script src="./lib/Promise_class.js"></script>
+  <!-- <script>
+    const p = new Promise((resolve,reject) => {
+      setTimeout(() => {
+        //resolve(1)
+        reject(2)
+        console.log('reject()改变状态后');
+      }, 100);
+    }).then(
+      value => {
+        console.log('onResolve1()',value);
+      },
+      err => {
+        console.log('onReject1()',err);
+        // return 3
+        // throw 3
+        return new Promise((resolve,reject) => reject(5))
+      }
+    ).then(
+      value => {
+        console.log('onResolve2()',value);
+      },
+      err => {
+        console.log('onReject2()',err);
+        throw 6
+      }
+    ).catch(err => {
+      console.log('onRejected3()',err);
+      return new Promise(() => {})
+    }).then(
+      value => {
+        console.log('onResolve4()',value);
+      },
+      err => {
+        console.log('onReject4()',err);
+      }
+    )
+  </script> -->
+  <script>
+    //如果接收一般值，p1成功，value就是这个值
+    const p1 = Promise.resolve(2)
+    //如果接收成功的promise，p2成功，value就是接收的promise的value
+    const p2 = Promise.resolve(Promise.resolve(3))
+    //如果接收失败的promise，p3失败，error就是这个promise的error
+    const p3 = Promise.resolve(Promise.reject(4))
+
+    // const p4 = new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve(5)
+    //   }, 1000);
+    // })
+    const p4 = Promise.resolveDelay(5,1000)
+
+    const p5 = Promise.resolve(6)
+
+    const pAll = Promise.all([p4,32,p2,p1])
+    pAll.then(
+      values => {
+        console.log('race onResolved()',values);
+      },
+      error => {
+        console.log('race onRejected()',error);
+      }
+    )
+    // const pRace = Promise.race([p4,74,p5,p2,p3])
+    // pRace.then(
+    //   value => {
+    //     console.log('race onResolved()',value);
+    //   },
+    //   error => {
+    //     console.log('race onRejected()',error);
+    //   }
+    // )
+
+    const p6 = Promise.resolveDelay(55,2000)
+    const p7 = Promise.rejectDelay(22,1000)
+    p6.then( 
+      value => {
+        console.log('resolveDelay',value);
+    })
+    p7.catch( 
+      value => {
+        console.log('rejectDelay',value);
+    })
+
+    console.log(typeof Date.now());
+
+    // var a=[]; a[0]=1; a[1]=2; a[2]=3; a[5]=4
+    // console.log(a.length);
+
+    // let a = decodeURIComponent('%')
+
+    function A(x){
+this.x = x;
+}
+A.prototype.x = 1;
+
+function B(x){
+this.x = x;
+}
+B.prototype = new A();
+var a = new A(2), b = new B(3);
+delete b.x;
+
+console.log(a.x);
+console.log(b.x);
+
+let i = parseInt('0xA')
+console.log(i);
+  </script>
+</body>
+</html>
